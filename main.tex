@@ -1,0 +1,278 @@
+\documentclass[14pt, a4paper]{article}
+\usepackage{minitoc}
+\usepackage[left=3.00cm, right=2.5cm, top=2.00cm, bottom=2.00cm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+%\usepackage{algpseudocode}
+%\usepackage{algorithm}
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\usepackage{blindtext}
+\usepackage{setspace}
+\usepackage[utf8]{inputenc}
+\usepackage[utf8]{vietnam}
+\usepackage[center]{caption}
+\usepackage[shortlabels]{enumitem}
+\usepackage{fancyhdr} % header, footer
+\usepackage{hyperref} % loại bỏ border với mục lục và công thức
+\usepackage[nonumberlist, nopostdot, nogroupskip]{glossaries}
+\usepackage{glossary-superragged}
+\usepackage{tikz,tkz-tab}
+\usepackage{pythonhighlight}
+\setglossarystyle{superraggedheaderborder}
+\pagestyle{fancy}
+%\usepackage[style=numeric,sortcites]{biblatex}
+%\addbibresource{ref.bib}
+%\usepackage[numbers]{natbib}
+\usepackage{indentfirst}
+\usepackage[natbib,backend=biber,style=ieee, sorting=ynt]{biblatex}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\bibliography{ref.bib}
+
+\graphicspath{{./figures/}}
+
+\fancyhf{}
+%\rhead{\textbf{Môn học: Các phương pháp thống kê hiện đại trong nghiên cứu Xã hội học}}
+\lhead{\textbf{GVHD: TS. Trịnh Quốc Anh}}
+\rfoot{\thepage}
+\lfoot{\textbf{Học viên thực hiện: Nguyễn Chí Thanh - 21007925}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%
+%\numberwithin{equation}{section}
+%\numberwithin{algorithm}{section}
+%\numberwithin{figure}{section}
+%
+%\setlength{\parindent}{0.5cm}
+%
+%\setcounter{secnumdepth}{3} % Cho phép subsubsection trong report
+%\setcounter{tocdepth}{3} % Chèn subsubsection vào bảng mục lục
+
+%\newtheorem{dl}{Định lý}
+%\newtheorem{md}{Mệnh đề}
+%\newtheorem{bd}{Bổ đề}
+%\newtheorem{dn}{Định nghĩa}
+%\newtheorem{hq}{Hệ quả}
+
+%\newtheorem{baitap}{Bài tập}
+%\newtheorem*{loigiai}{Lời giải}
+
+%\numberwithin{dl}{section}
+%\numberwithin{md}{section}
+%\numberwithin{bd}{section}
+%\numberwithin{dn}{section}
+%\numberwithin{hq}{section}
+
+\setlength{\parindent}{0cm}
+
+\newtheorem{dl}{Định lý}
+\newtheoremstyle{sltheorem}
+{}                % Space above
+{}                % Space below
+{\normalfont}        % Theorem body font % (default is "\upshape")
+{}                % Indent amount
+{\bfseries}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{ }               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{sltheorem}
+\newtheorem{baitap}{Bài tập}
+\newtheoremstyle{soltheorem}
+{}                % Space above
+{}                % Space below
+{\normalfont}        % Theorem body font % (default is "\upshape")
+{}                % Indent amount
+{\bfseries}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{\newline}               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{soltheorem}
+\newtheorem*{loigiai}{Lời giải}
+
+\onehalfspacing
+
+\begin{document}
+\begin{titlepage}
+
+    \newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+    \center % Center everything on the page
+
+    %----------------------------------------------------------------------------------------
+    %	HEADING SECTIONS
+    %----------------------------------------------------------------------------------------
+    \textsc{\LARGE Đại học Quốc Gia Hà Nội}\\[0.5cm]
+    \textsc{\LARGE Trường đại học Khoa học tự nhiên}\\[0.5cm] % Name of your university/college
+    \textsc{\LARGE Khoa Toán - Cơ - Tin học}\\[0.5cm]
+
+    \includegraphics[scale=0.2]{HUS-logo.jpg}\\[0.5cm]
+
+    \textsc{\Large Chuyên ngành: Khoa học dữ liệu}\\[0.5cm] % Major heading such as course name
+
+
+    %----------------------------------------------------------------------------------------
+    %	TITLE SECTION
+    %----------------------------------------------------------------------------------------
+
+    \HRule \\[0.4cm]
+    { \huge \bfseries Bài tập môn học}\\[0.4cm] % Title of your document
+    \HRule \\[1.5cm]
+
+    \textsc{\Large Môn học: Các phương pháp thống kê hiện đại \\ trong nghiên cứu Xã hội học}\\[1cm] % Minor heading such as course title
+
+
+    \textsc{\Large Bài tập số 3}\\[1cm]
+
+
+    %----------------------------------------------------------------------------------------
+    %	AUTHOR SECTION
+    %----------------------------------------------------------------------------------------
+    \begin{minipage}{0.4\textwidth}
+        \begin{flushleft} \large
+        \emph{Giảng viên hướng dẫn:} \\
+        TS. Trịnh Quốc Anh % Supervisor's Name
+        \end{flushleft}
+    \end{minipage}\\[0.5cm]
+
+    \begin{minipage}{0.4\textwidth}
+    \begin{flushleft} \large
+    \emph{Học viên thực hiện:}\\
+    Nguyễn Chí Thanh \\
+    MSHV: 21007925 \\ % Your name
+    Lớp: Khoa học dữ liệu - K4
+    \end{flushleft}
+    \end{minipage}
+
+
+    % If you don't want a supervisor, uncomment the two lines below and remove the section above
+    %\Large \emph{Author:}\\
+    %John \textsc{Smith}\\[3cm] % Your name
+
+    %----------------------------------------------------------------------------------------
+    %	DATE SECTION
+    %----------------------------------------------------------------------------------------
+
+    % I don't want day because it is English
+    % {\large \today}\\[2cm] % Date, change the \today to a set date if you want to be precise
+
+    %----------------------------------------------------------------------------------------
+    %	LOGO SECTION
+    %----------------------------------------------------------------------------------------
+
+    %\includegraphics{logo/rsz_3logo-khtn.png}\\[1cm] % Include a department/university logo - this will require the graphicx package
+
+    %----------------------------------------------------------------------------------------
+
+    \vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+\nocite{*}
+
+\newpage
+
+\begin{baitap}
+    Hãy tóm tắt về nghiên cứu "Who plays video games?":
+    \begin{itemize}
+        \item Vấn đề/câu hỏi cần nghiên cứu
+        \item Dữ liệu dùng để nghiên cứu
+        \item Cơ sở và phương pháp nghiên cứu
+    \end{itemize}
+\end{baitap}
+
+\begin{loigiai}
+    Hãy tóm tắt về nghiên cứu "Who plays video games?":
+    \begin{itemize}
+        \item Vấn đề/câu hỏi cần nghiên cứu:
+        \begin{enumerate}
+            \item Bắt đầu bằng cách đưa ra tỷ lệ sinh viên chơi game trong tuần trước khi cuộc khỏa sát diễn ra.
+            Ước lượng khoảng tin cậy cũng như ước lượng điểm cho tỷ lệ này.
+            \item Xét thời gian chơi gam trong tuần trước khi cuộc khảo sát diễn ra so với tần suất chơi ghi nhận được (hàng ngày, hàng tuần,...).
+            Liệu nếu có một bài kiểm tra vào tuần trước khi diễn ra cuộc khảo sát có làm ảnh hưởng đến ước lượng ở câu hỏi trước?
+            \item Tìm khoảng tin cậy cho thời gian chơi game trung bình của một sinh viên trước cuộc khảo sát.
+            Ta cần chú ý đến phân phối mẫu.
+            \item Ta xét về các câu hỏi mang tính "thái độ".
+            Nhìn chung sinh viên có thích chơi gam hay không?
+            Nếu ta phải lập một danh sách ngắn các lý do quan trọng vì sao sinh viên thích (hoặc không thích) chơi game, ta sẽ đưa gì vào danh sách?
+            \item Tìm sự khác biệt giữa những sinh viên chơi game và những sinh viên không chơi game.
+            Để làm được điều này, hãy sử dụng những câu hỏi trong phần cuối của cuộc khỏa sát và so sánh giữa sinh viên nam và sinh viên nữ,
+            những người có đi hay làm hay không, có máy tính hay không hoặc những người đặt kỳ vọng được điểm A trong các môn học hay không.
+            Một số phương pháp trực quan hữu ích trong so sánh các tiêu chí trên.
+            \item Ta sẽ nghiên cứu sau hơn về điểm số mà các sinh viên mong muốn trong các môn học.
+            Kết quả cuộc khảo sát với phù hợp với phân phối điểm là 20\% điểm A, 30 \% điểm B, 40 \% điểm C, 10 \% điểm D hoặc thấp hơn.
+            Nếu những sinh viên không trả lời là những sinh viên bị trượt thì bức tranh toàn cảnh của cuộc khảo sát sẽ thay đổi thế nào?
+        \end{enumerate}
+
+        \item Dữ liệu dùng để nghiên cứu:
+        
+        95 trong tổng số 314 sinh viên tham gia khóa học Thống kê 2 vào mùa đông 1994 được chọn ngẫu nhiên tham gia vào cuộc khảo sát.
+        Các câu hỏi đã được hoàn thành thu được từ 91 trong tổng số 95 sinh viên.
+        Dữ liệu có được là các phản hồi của sinh viên đối với bảng câu hỏi.
+
+        Cuộc khảo sát yêu cầu sinh viên xác định tần suất chơi game và điều gì làm sinh viên thích và không thích về các tựa game.
+        Câu trả lời cho những câu hỏi này đã được mã hóa bằng số như được mô tả trong Bảng 2.1.
+        Bảng 2.1 cũng cung cấp một vài mẫu quan sát. Nếu một câu hỏi không được trả lời hoặc trả lời không chính xác, thì nó được mã hóa thành 99. Tất cả các câu hỏi có câu trả lời có/không đều được ghi 1 cho "Có" và 0 cho "Không".
+        Những người trả lời chưa bao giờ chơi game hoặc hoàn toàn không thích chơi game được yêu cầu bỏ qua nhiều câu hỏi.
+
+        Cuộc khảo sát có thể tạm chia thành ba phần. Hai trong số ba phần liên quan đến việc chơi gam của sinh viên.
+        Một trong những phần này xác định tần suất chơi game của sinh viên.
+        Thông tin này được yêu cầu qua hai câu hỏi.
+        Một câu hỏi hỏi sinh viên dành bao nhiêu thời gian chơi game vào tuần tước khi diễn ra khảo sát và câu hỏi còn lại hỏi tần suất chơi game của sinh viên (hàng ngày, hàng tuần, hàng tháng, học kỳ).
+
+        Phân thứ hai của cuộc khảo sát bao gồm việc sinh viên có thích chơi game hay không và vì sao.
+        Một bản tổng hợp các phản hồi cho ba trong số những câu hỏi này xuất hiện trong bảng 2.2,  2.3 và 2.4.
+        Những câu hỏi này khác với những câu hỏi khác ở chỗ có thể đưa ra nhiều hơn một câu trả lời.
+        Bảng 2.2 tóm tắc các thể loại game đã được sinh viên chơi.
+        Sinh viên được yêu cầu đánh dấu vào tất cả các thể loại game mà sinh viên đã chơi.
+        Ví dụ, 50 \% sinh viên trả lời câu hỏi này nói rằng họ có chơi game thuộc thể loại hành động.
+        Không phải tất cả các sinh viên đều trả lời câu hỏi này, vì mootjsoos sinh viên nói rằng họ chưa từng chơi game hoặc không hề thích chơi game sẽ được hướng dẫn bỏ qua các câu hỏi này.
+        Những sinh viên đã trả lời câu hỏi này cũng được hỏi lý do vì sao họ chơi các game đó.
+        Họ được yêu cầu chọn ba lý do. Phản hồi của các sinh viên được trình bày trong bảng 2.3,
+        Cuối cùng, bảng 2.4 tóm tắt những điều mà sinh viên không thích về các tựa game đó.
+        Tất cả các sinh viên được yêu cầu trả lời câu hỏi này và được chọn tối đa ba lý do không thích chơi game.
+
+        Phần thứ ba của bảng câu hỏi là thu thập các thông tin cá nhân chung về sinh viên như là tuổi, giới tính.
+        Các sinh viên cũng được hỏi họ có tài khoản email hay không, họ có thích hay ghét môn toán không, điểm số các môn học mà họ kỳ vọng.
+
+        Ta có tổng 314 sinh viên. Để chọn ra 95 sinh viên cho nghiên cứu, mỗi sinh viên được đánh số từ 1 đến 314.
+        Một bộ sinh số ngẫu nhiên chọn 95 số giữa 1 và 314.
+        Các sinh viên tương ứng được chọn vào nghiên cứu.
+
+        Để khuyến kích trả lời trung thực, thì thông tin của sinh viên sẽ được giữa bí mật.
+        Mọi phiếu trả lời không được điền tên.
+
+        Để hạn chế số phiếu không phản hồi, hệ thống thu thập dữ liệu gồm ba bước được triển khai.
+        Người thu thập dữ liệu sẽ đến vào thứ ba và thứ năm nói về cuộc khảo sát sẽ được thực hiện.
+        Sinh viên đã làm bài kiểm tra trước cuộc khảo sát và được trả kết quả trong tuần thực hiện khảo sát.
+        
+        Cuối cùng, để tăng độ chính xác của cuộc khảo sát, người thu thập dữ liệu sẽ phải khuyến khích sinh viên và cho biết sự đảm bảo về thông tin cá nhân.
+
+        Các game được phân loại theo các thiết bị mà game được chạy và loại kỹ năng cần để chơi game.
+        Với thiết bị, được chia thành ba loại cơ bản: arcade, console và máy tính cá nhân.
+        Với thể loại, game được chia thành năm thể loại: hành động, phiêu lưu, mô phỏng, chiến thuật và nhập vai.
+
+        Đa số các arcade game là các game thuộc thể loại game hành động mà yêu cầu sự linh hoạt của tay và mắt và không cần thời gian học lâu.
+        Game chạy trên console có thể là hành động, phiêu lưu hoặc chiến thuật.
+        Các game mô phỏng hoặc nhập vai hay được chơi trên máy tính cá nhâ.
+        Các game này không phù hợp trên arcade hoặc console vì cần nhiều giờ chơi.
+        Các thể loại game đều có thể chơi trên PC.
+
+        \item Cơ sở và phương pháp nghiên cứu:
+        Ta sẽ sử dụng phương pháp học không giám sát là phân cụm.
+        Nhưng nếu để nguyên dữ liệu, các điểm dữ liệu có số chiều rất lớn.
+        Để việc phân tích hiệu quả, ta sẽ giảm chiều dữ liệu và phân cụm các điểm dữ liệu trên không gian đã được giảm chiều.
+        Sau đó ta sẽ xem xét các điểm trên không gian gốc và xem các đặc trưng mà các điểm dữ liệu cùng một cụm giống nhau.
+
+    \end{itemize}
+\end{loigiai}
+
+
+\begin{baitap}
+    Hãy đề xuất mô hình phân loại sinh viên và khả năng chơi games
+\end{baitap}
+\end{document}
