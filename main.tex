@@ -126,7 +126,7 @@
     \textsc{\Large Môn học: Các phương pháp thống kê hiện đại \\ trong nghiên cứu Xã hội học}\\[1cm] % Minor heading such as course title
 
 
-    \textsc{\Large Bài tập số 3}\\[1cm]
+    \textsc{\Large Bài tập số 4}\\[1cm]
 
 
     %----------------------------------------------------------------------------------------
@@ -266,8 +266,44 @@
         Ta sẽ sử dụng phương pháp học không giám sát là phân cụm.
         Nhưng nếu để nguyên dữ liệu, các điểm dữ liệu có số chiều rất lớn.
         Để việc phân tích hiệu quả, ta sẽ giảm chiều dữ liệu và phân cụm các điểm dữ liệu trên không gian đã được giảm chiều.
-        Sau đó ta sẽ xem xét các điểm trên không gian gốc và xem các đặc trưng mà các điểm dữ liệu cùng một cụm giống nhau.
+        Ta sẽ gán các cụm là các nhãn giả với từng mẫu dữ liệu.
+        Ta thực hiện huấn luyện một mô hình phân loại trên dữ liệu đã được giảm chiều dùng PCA và nhãn tương ứng với các cụm.
+        Sau khi có được mô hình phân loại ta sẽ biển đổi các trọng số được huấn luyện từ không gian giảm chiều trở lại không gian các đặc trưng gốc từ đó ta xác định những yếu tố ảnh hưởng nhiều đến việc phân loại sinh viên theo khả năng chơi game.
+        Ta có mã giả thực hiện PCA:
 
+        \begin{algorithm}[h!]
+            \DontPrintSemicolon
+            \KwIn{Dữ liệu $\mathcal{D} \in \mathbb{R}^{N \times d}$, tỷ lệ thông tin giữ lại $\alpha$}
+
+            $\bold{\mu} \gets \dfrac{1}{N} \sum_{i=1}^N \bold{x}_i$\;
+            $\bold{Z} \gets \mathcal{D} - \bold{\mu}^T$\;
+            $\bold{\Sigma} \gets \dfrac{1}{N}\bold{Z}^T \bold{Z}$\;
+            Tính các trị riêng $\lambda_1, \lambda_2, \dots, \lambda_d$ và các vector riêng tương ứng $\bold{e}_1, \bold{e}_2, \dots, \bold{e}_d$\;
+            $f(r) \gets \dfrac{\sum_{i=1}^r \lambda_i}{\sum_{j=1}^d \lambda_j}$\;
+            Tìm $r$ nhỏ nhất sao cho $f(r) \geq \alpha$\;
+            $\bold{U} \gets \begin{bmatrix} \bold{e}_1  & \bold{e}_2  & \dots  & \bold{e}_r \end{bmatrix}$\;
+            $\mathcal{D}_r \gets \mathcal{D} \times \bold{U}$\;
+            \Return{$\mathcal{D}_r$}\;
+            \caption{Thuật toán thực hiện PCA}
+        \end{algorithm}
+
+        Với:
+
+        \begin{equation*}
+            \mathcal{D} = \begin{bmatrix}
+                \bold{x}_1^T \\ \bold{x}_2 \\ \vdots \\ \bold{x}_N^T
+            \end{bmatrix} \in \mathbb{R}^{N \times d}
+        \end{equation*}
+        và:
+
+        \begin{equation*}
+            \bold{U} = \begin{bmatrix}
+                \bold{e}_1 & \bold{e}_2 & \dots & \bold{e}_r
+            \end{bmatrix} \in \mathbb{R}^{d \times r}
+        \end{equation*}
+
+        Khi ta tìm được các trọng số được huấn luyện của mô hình phân loại là $\bold{W}_{PCA} \in \mathbb{R}^{\mathrm{c} \times r}$ ($c$ là số lớp).
+        Ta tìm các trọng số trong không gian dữ liệu ban đầu là $\bold{W} \in \mathbb{R}^{\mathrm{c} \times d}$ bằng công thức $\bold{W} =   \bold{W}_{PCA} \times \bold{U}^T$.
     \end{itemize}
 \end{loigiai}
 
@@ -275,4 +311,171 @@
 \begin{baitap}
     Hãy đề xuất mô hình phân loại sinh viên và khả năng chơi games
 \end{baitap}
+
+\begin{loigiai}
+    Ta sẽ thực hiện thống kê mô tả tập dữ liệu.
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{1.png}
+        \caption{Histogram của các trường like, where, freq, busy, educ, sex}
+        \label{fig:1}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{2.png}
+        \caption{Histogram của các trường home, math, own, cdrom, email, grade}
+        \label{fig:2}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{3.png}
+        \caption{Histogram của các trường age, work}
+        \label{fig:3}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{4.png}
+        \caption{Histogram của các trường action, adv, sim, sport, strategy, relax}
+        \label{fig:4}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{5.png}
+        \caption{Histogram của các trường challenge, master, bored, graphic, time\_2, frust}
+        \label{fig:5}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{6.png}
+        \caption{Histogram của các trường rules, cost, boring, friends, points}
+        \label{fig:6}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{7.png}
+        \caption{Histogram của trường time\_1}
+        \label{fig:7}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.75\textwidth]{figures/pca_scattering_4_dim.png}
+        \caption{Scatter plot của các chiều thứ 0 đến chiều thứ 3 của dữ liệu sau khi được giảm chiều qua PCA}
+        \label{fig:pca-scattering-4-dim}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/dendro_ward.png}
+        \caption{Dendrogram được sử dụng dựa trên Ward linkage}
+        \label{fig:dendro-ward}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/dendro_single.png}
+        \caption{Dendrogram được sử dụng dựa trên Single linkage}
+        \label{fig:dendro-single}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/dendro_complete.png}
+        \caption{Dendrogram được sử dụng dựa trên Complete linkage}
+        \label{fig:dendro-complete}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/dendro_average.png}
+        \caption{Dendrogram được sử dụng dựa trên Average linkage}
+        \label{fig:dendro-average}
+    \end{figure}
+
+    \begin{figure}[h!]
+        \centering
+        \includegraphics[width=0.75\textwidth]{figures/pca_scattering_4_dim_clustering.png}
+        \caption{Scatter plot của các chiều thứ 0 đến chiều thứ 3 của dữ liệu sau khi được giảm chiều qua PCA và màu sắc tương ứng với các cụm được gán sau thuật toán Agglomerative Clustering}
+        \label{fig:pca-scattering-4-dim-clustering}
+    \end{figure}
+
+    \begin{python}
+clustering = AgglomerativeClustering(n_clusters=None, linkage="complete", distance_threshold=2.8, compute_distances=True).fit(reduced_data)
+y = clustering.labels_
+x_train, x_test, y_train, y_test = train_test_split(reduced_data, y, test_size=0.7, stratify=y, random_state=42)
+max_score = 0
+max_model = None
+max_state = None
+
+for i in tqdm(range(1000)):
+    clf = LogisticRegression(solver="newton-cg", multi_class='multinomial')
+    clf.fit(x_train, y_train)
+    y_pred = clf.predict_proba(x_test)
+    #print(y_pred)
+    score = roc_auc_score(y_test[:, np.newaxis], y_pred, average="weighted", multi_class="ovr")
+    if score > max_score:
+        max_score = score
+        max_state = i
+        max_model = clf
+    \end{python}
+
+    \begin{python}
+weights = clf.coef_.dot(pca.components_)
+sorted_weights = np.argsort(np.abs(weights), axis=1)[:, ::-1]
+columns = total_df.columns.tolist()
+index_to_column = dict(zip(range(len(columns)), columns))
+vectorize = np.vectorize(lambda x: index_to_column[x])
+influence_col = vectorize(sorted_weights)
+for w in influence_col.tolist():
+print(w)
+    \end{python}
+
+    \begin{verbatim}
+  array([[-0.01905233,  0.03040178,  0.07620041,  0.37523721,  0.18468372,
+  0.35256868, -1.57644863,  0.0848546 ,  0.22665994, -0.0724047 ,
+  0.0510373 ,  0.31990085, -0.09016916, -0.01233888, -0.22776163,
+ -0.09697464, -0.25112835, -0.06221071, -0.1389623 ,  0.36737361,
+ -0.01134287,  0.13605727,  0.02029419,  0.26085576,  0.09147964,
+  0.06936452,  0.30213948,  0.00222139,  0.08332271,  0.05472592,
+ -0.26289473,  0.08903341,  0.01931798, -0.01309478],
+[ 0.05622108, -0.05680812,  0.39593339,  0.30695345,  0.37188362,
+  0.34906731,  1.24639961, -0.05550088, -0.06438522, -0.09470176,
+ -0.21854974,  0.0641082 ,  0.22028617,  0.2708387 ,  0.34795807,
+  0.47047227,  0.49908779,  0.28891571,  0.39098637,  0.14823743,
+  0.53694511, -0.00946755,  0.23426606, -0.06046363,  0.29242132,
+  0.23029819, -0.19864076,  0.12716849,  0.06546989,  0.1884355 ,
+  0.2398534 , -0.13085081,  0.07781263,  0.02972166],
+[-0.03934225,  0.03040776, -0.46143406, -0.77175836, -0.5630687 ,
+ -0.68260874,  0.16554538, -0.01007923,  0.0419215 ,  0.23860093,
+  0.13918992, -0.11049564, -0.08044431, -0.37659302, -0.10705565,
+ -0.12991344, -0.03838426, -0.01329556, -0.03131409, -0.23781619,
+ -0.24384137,  0.0449526 , -0.04763537,  0.00774031, -0.17603363,
+ -0.10143517,  0.15860663,  0.08869532,  0.02158788, -0.05399911,
+  0.25553317,  0.21970301,  0.05670951,  0.22184914],
+[ 0.00217349, -0.00400142, -0.01069974,  0.0895677 ,  0.00650136,
+ -0.01902724,  0.16450364, -0.01927449, -0.20419622, -0.07149447,
+  0.02832253, -0.27351341, -0.0496727 ,  0.11809319, -0.01314079,
+ -0.24358419, -0.20957518, -0.21340944, -0.22070998, -0.27779486,
+ -0.28176087, -0.17154232, -0.20692488, -0.20813244, -0.20786733,
+ -0.19822755, -0.26210535, -0.2180852 , -0.17038048, -0.18916231,
+ -0.23249185, -0.1778856 , -0.15384013, -0.23847602]])
+    \end{verbatim}
+
+    \begin{verbatim}
+0: ['sex', 'freq', 'strategy', 'educ', 'own', 'time_2', 'cost', 'master', 'adv', 'grade', 'home', 'busy', 'sport', 'coord', 'action', 'bored', 'cdrom', 'boring', 'age', 'lonely', 'where', 'math', 'graphic', 'sim', 'rules', 'work', 'like', 'challenge', 'friends', 'time_1', 'point', 'email', 'relax', 'frust']
+1: ['sex', 'relax', 'adv', 'action', 'where', 'sport', 'busy', 'educ', 'grade', 'freq', 'bored', 'sim', 'email', 'cost', 'challenge', 'graphic', 'cdrom', 'work', 'time_2', 'rules', 'strategy', 'boring', 'frust', 'math', 'friends', 'lonely', 'home', 'own', 'master', 'like', 'time_1', 'age', 'point', 'coord']
+2: ['freq', 'educ', 'busy', 'where', 'email', 'cost', 'relax', 'math', 'strategy', 'point', 'boring', 'bored', 'sex', 'time_2', 'work', 'action', 'own', 'grade', 'graphic', 'frust', 'cdrom', 'friends', 'rules', 'challenge', 'coord', 'home', 'time_1', 'adv', 'sport', 'like', 'lonely', 'sim', 'age', 'master']
+3: ['relax', 'strategy', 'own', 'time_2', 'action', 'point', 'cost', 'sport', 'frust', 'sim', 'adv', 'master', 'bored', 'challenge', 'home', 'graphic', 'rules', 'boring', 'coord', 'lonely', 'sex', 'friends', 'email', 'freq', 'math', 'cdrom', 'work', 'age', 'educ', 'grade', 'where', 'busy', 'like', 'time_1']
+    \end{verbatim}
+\end{loigiai}
+
+\newpage
+\printbibliography[title={TÀI LIỆU THAM KHẢO}]
 \end{document}
