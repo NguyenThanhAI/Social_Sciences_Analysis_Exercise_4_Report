@@ -285,6 +285,7 @@
             $\mathcal{D}_r \gets \mathcal{D} \times \bold{U}$\;
             \Return{$\mathcal{D}_r$}\;
             \caption{Thuật toán thực hiện PCA}
+            \label{alg:PCA}
         \end{algorithm}
 
         Với:
@@ -334,6 +335,8 @@
         \item grade là điểm kỳ vọng của sinh viên trong các môn học
     \end{itemize}
 
+    Có một số trường tương ứng với một số điểm dữ liệu là 99 do sinh viên không trả lời hoặc trả lời sai định sạng ta sẽ đặt thành -1.
+
     Dataframe thứ hai gồm 21 trường:
 
     \begin{itemize}
@@ -360,45 +363,55 @@
         \item other2 thể hiện sinh viên không thích chơi game vì lý do khác.
     \end{itemize}
 
+    Do 2 trường other và other2 có thuộc dạng xâu ký tự nhưng trường này rất thưa nên ta sẽ loại bỏ hai trường này.
+    Có 4 điểm dữ liệu liên tiếp mà mọi trường tương ứng đều có giá trị là "NA" ta sẽ chuyển các giá trị thành -1.
+
+    Ta ghép hai dataframe trên lại thành một dataframe có 34 trường.
+    Các trường đều có dạng biến phân loại.
+    Có 2 trường là time.
+    Một trường time từ dataframe thứ nhất thể hiện số giờ chơi game của sinh viên trong tuần trước khi cuộc khảo sát diễn ra.
+    Một trường time đến từ dataframe thứ hai thể hiện sinh viên không thích chơi game vì tốn thời gian hay không.
+    Để tránh nhầm lẫn ta sẽ đặt lại tên trường time từ dataframe thứ nhất là time\_1 và trường time đến từ dataframe thứ hai là time\_2.
+    Ta sẽ vẽ biểu đồ cột thể hiện tần suất của từng giá trị tương ứng với từng trường
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.6\textwidth]{1.png}
-        \caption{Histogram của các trường like, where, freq, busy, educ, sex}
+        \caption{Biểu đồ tần suất của các trường like, where, freq, busy, educ, sex}
         \label{fig:1}
     \end{figure}
 
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.6\textwidth]{2.png}
-        \caption{Histogram của các trường home, math, own, cdrom, email, grade}
+        \caption{Biểu đồ tần suất của các trường home, math, own, cdrom, email, grade}
         \label{fig:2}
     \end{figure}
 
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.6\textwidth]{3.png}
-        \caption{Histogram của các trường age, work}
+        \caption{Biểu đồ tần suất của các trường age, work}
         \label{fig:3}
     \end{figure}
 
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.6\textwidth]{4.png}
-        \caption{Histogram của các trường action, adv, sim, sport, strategy, relax}
+        \caption{Biểu đồ tần suất của các trường action, adv, sim, sport, strategy, relax}
         \label{fig:4}
     \end{figure}
 
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.6\textwidth]{5.png}
-        \caption{Histogram của các trường challenge, master, bored, graphic, time\_2, frust}
+        \caption{Biểu đồ tần suất của các trường challenge, master, bored, graphic, time\_2, frust}
         \label{fig:5}
     \end{figure}
 
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.6\textwidth]{6.png}
-        \caption{Histogram của các trường rules, cost, boring, friends, points}
+        \caption{Biểu đồ tần suất của các trường rules, cost, boring, friends, points}
         \label{fig:6}
     \end{figure}
 
@@ -409,12 +422,95 @@
         \label{fig:7}
     \end{figure}
 
+    Các hình \ref{fig:1}, hình \ref{fig:2}, \ref{fig:3}, \ref{fig:4}, \ref{fig:5}, \ref{fig:6} thể hiện biểu đồ tần suất của các trường.
+    Đa số các sinh viên thích game ở mức độ vừa phải.
+    Đa số các sinh viên nếu chơi game thì chơi trên máy tính tại nhà.
+    Đa số các sinh viên nếu chơi game sẽ chơi game với tần suất hàng tuần hoặc theo học kỳ.
+    Đa số các sinh viên sẽ không chơi game nếu bận.
+    Số ít hơn các sinh viên có chơi game mang tính giáo dục.
+    Đa số các sinh viên tham gia khảo sát là sinh viên nam.
+
+    Đa số các sinh viên không ghét môn toán.
+    Đa số các sinh viên sở hữu máy tính cá nhân.
+    Chỉ một số ít máy tính của các sinh viên có ổ đĩa CD-ROM.
+    Đa số các sinh viên có địa chỉ email.
+    Đa số các sinh viên có kỳ vọng đạt điểm B trong các môn học.
+
+    Đa số các sinh viên nằm trong độ tuổi từ 18 đến 20 tuổi.
+    Đa số các sinh viên không làm thêm vào tuần ngay trước khi diễn ra cuộc khảo sát.
+
+    Trong các thể loại game, thể loại hành động và chiến thuật được nhiều sinh viên chơi nhất.
+    Khá ít các sinh viên chơi các thể loại game mô phỏng và phiêu lưu.
+    Đa số các sinh viên chơi game vì mục đích thư giãn, xả stress.
+    Số ít các sinh viên chơi game để thử thách bản thân hay vì thích đồ họa của game.
+
+    Đa số các sinh viên không thích chơi game vì tốn thời gian và chi phí đắt hoặc vô ích.
+    Số ít viên không thích chơi game vì lý do game nhiều luật chơi phức tạp hay nhàm chán, bạn của họ không tham gia chơi.
+
+    Thời gian chơi game trong tuần ngay trước khi diễn ra cuộc khảo sát diễn ra đa số các sinh viên chơi game ít hơn 5 tiếng, có cá biệt một số sinh viên chơi game 30 tiếng/tuần.
+
+    Để thực hiện phân cụm các sinh viên, ta sẽ sử dụng PCA ở thuật toán \ref{alg:PCA}
+    Trước khi đưa vào thuật toán, ta sẽ sử dụng minmax-scaling dữ liệu.
+    Ta chọn số chiều sau khi thực hiện PCA bằng cách giữ lại 95 \% thông tin của dữ liệu ban đầu.
+    Ta thực hiện PCA bằng đoạn code:
+
+    \begin{python}
+data_encoded = pd.get_dummies(total_df)
+scaler = MinMaxScaler()
+data_scaled = scaler.fit_transform(data_encoded)
+pca = PCA()
+pca.fit(data_scaled)
+
+cumulative_var = pca.explained_variance_ratio_.cumsum()
+n_components = np.where(cumulative_var > 0.95)[0][0]
+pca = PCA(n_components=n_components)
+pca.fit(data_scaled)
+reduced_data = pca.transform(data_scaled)
+    \end{python}
+
+    Ta vẽ biểu đồ scatter-plot giữa đôi một trong số 4 chiều đầu tiên của dữ liệu sau khi qua thuật toán PCA bằng đoạn code:
+
+    \begin{python}
+def scatter_plot_pca(x: np.ndarray, y: np.ndarray=None):
+    fig = plt.figure(figsize=(15, 15), facecolor='w')
+    fig.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0.2, hspace=0.2)
+    nums = len(list(combinations(range(x[:,:4].shape[1]), r=2)))
+    cols = 3
+    rows = math.ceil(nums/cols)
+    i = 0
+    
+#fig, ax = plt.subplots(rows, cols)
+for couple in combinations(range(x[:,:4].shape[1]), r=2):
+    ax = fig.add_subplot(rows, cols, i + 1)
+    ax.set_title("Axis {} - Axis {}".format(couple[0], couple[1]))
+    x_ax = x[:, couple[0]]
+    y_ax = x[:, couple[1]]
+    if y is not None:
+        for g in np.unique(y):
+            ix = np.where(y == g)
+            ax.scatter(x_ax[ix], y_ax[ix], label=g, s=50)
+    else:
+        ax.scatter(x_ax, y_ax, s=50)
+
+    ax.set_xlabel("Axis {}".format(couple[0]))
+    ax.set_ylabel("Axis {}".format(couple[1]))
+    ax.set_aspect(abs((x_ax.max() - x_ax.min())/(y_ax.max() - y_ax.min()))*1.0)
+    ax.grid()
+    ax.legend()
+    i += 1
+
+scatter_plot_pca(x=reduced_data)
+    \end{python}
+
+
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.75\textwidth]{figures/pca_scattering_4_dim.png}
         \caption{Scatter plot của các chiều thứ 0 đến chiều thứ 3 của dữ liệu sau khi được giảm chiều qua PCA}
         \label{fig:pca-scattering-4-dim}
     \end{figure}
+
+    Biểu đồ scatter-plot giữa đôi một trong số 4 chiều đầu tiên của dữ liệu sau khi qua thuật toán PCA được thể hiện ở hình \ref{fig:pca-scattering-4-dim}
 
     \begin{figure}[h!]
         \centering
@@ -444,6 +540,23 @@
         \label{fig:dendro-average}
     \end{figure}
 
+    Tiếp đến ta sẽ thực hiện vẽ các Dendrogram theo các linkage (cách tính khoảng cách giữa các nhóm điểm).
+    Kết quả được thể hiện ở cách hình \ref{fig:dendro-ward}, \ref{fig:dendro-single}, \ref{fig:dendro-complete}, \ref{fig:dendro-average}.
+    Ở các hình ta đều thấy có một nhóm 4 điểm chính là điểm dữ liệu 52,53,54,55 vì các điểm này các trường bên phía dữ liệu.
+    Các linkage single và average cho thấy không có sự tách biệt lớn giữa các điểm dữ liệu trừ các điểm dữ liệu 52,53,54,55.
+    Các linkage ward và complete cho thấy sự tách biệt giữa các nhóm điểm dữ liệu tốt hơn.
+    
+    Ta sử dụng phương pháp phân cụm AgglomerativeClustering (phân cụm kết tụ - bottom up).
+    Phương pháp phân cụm này rất tương tự cách tạo Dendrogram khi tạo các cụm từ các điểm gần nhau nhất theo khoảng cách.
+    Ta chọn ngưỡng từ Dendrogram sử dụng complete linkage là 2.8.
+    Kết quả của quá trình phân cụm sẽ trở thành nhãn giả của các điểm dữ liệu:
+    Ta sử dụng đoạn code:
+
+    \begin{python}
+clustering = AgglomerativeClustering(n_clusters=None, linkage="complete", distance_threshold=2.8, compute_distances=True).fit(reduced_data)
+y = clustering.labels_
+    \end{python}
+
     \begin{figure}[h!]
         \centering
         \includegraphics[width=0.75\textwidth]{figures/pca_scattering_4_dim_clustering.png}
@@ -451,9 +564,16 @@
         \label{fig:pca-scattering-4-dim-clustering}
     \end{figure}
 
+    Sau khi thực hiện phân cụm, ta vẽ lại scatter-plot như ở hình \ref{fig:pca-scattering-4-dim} giữa đôi một các chiều trong 4 chiều đầu tiên dữ liệu sau khi qua thuật toán PCA nhưng có biểu thị các cụm mà các điểm dữ liệu được gán vào.
+    Hình \ref{fig:pca-scattering-4-dim-clustering} biểu thị scatter-plot đã được thêm nhãn cụm là màu sắc tương ứng với cụm mà điểm dữ liệu thuộc về.
+    Ta nhận thấy ở cặp chiều thứ 0 và thứ 1, và cặp chiều thứ 1 và thứ 3 đã có sự tách biệt khá rõ ràng giữa các cụm.
+
+    Tiết theo ta sẽ sử dụng các cụm làm các nhãn giả và huấn luyện cho một mô hình phân loại đơn giản.
+    Ta sử dụng độ đo là trung bình auc-roc của từng nhãn trên tập test.
+    Ta sử dụng đoạn code
+
+
     \begin{python}
-clustering = AgglomerativeClustering(n_clusters=None, linkage="complete", distance_threshold=2.8, compute_distances=True).fit(reduced_data)
-y = clustering.labels_
 x_train, x_test, y_train, y_test = train_test_split(reduced_data, y, test_size=0.7, stratify=y, random_state=42)
 max_score = 0
 max_model = None
@@ -471,16 +591,17 @@ for i in tqdm(range(1000)):
         max_model = clf
     \end{python}
 
+    Kết quả mô hình cho roc-auc trung bình giữa các nhãn là 0.9883.
+    Ta sẽ đưa các tham số của mô hình đặc trưng dựa vào PCA trở về không gian đặc trưng ban đầu của dữ liệu bằng công thức $\bold{W} =   \bold{W}_{PCA} \times \bold{U}^T$.
+
+    Ta sử dụng đoạn code:
+
+
     \begin{python}
 weights = clf.coef_.dot(pca.components_)
-sorted_weights = np.argsort(np.abs(weights), axis=1)[:, ::-1]
-columns = total_df.columns.tolist()
-index_to_column = dict(zip(range(len(columns)), columns))
-vectorize = np.vectorize(lambda x: index_to_column[x])
-influence_col = vectorize(sorted_weights)
-for w in influence_col.tolist():
-print(w)
     \end{python}
+
+    Giá trị các trọng số được huấn luyện tương ứng với không gian đặc trưng ban đầu của dữ liệu (có kích thước 4x34) là:
 
     \begin{verbatim}
   array([[-0.01905233,  0.03040178,  0.07620041,  0.37523721,  0.18468372,
@@ -513,12 +634,82 @@ print(w)
  -0.23249185, -0.1778856 , -0.15384013, -0.23847602]])
     \end{verbatim}
 
+Ta sắp xếp lại các trọng số được huấn luyện theo chiều giảm dần giá trị tuyệt đối của các trọng số tương ứng với từng lớp và chuyển về tên đặc trưng tương ứng dùng đoạn code:
+
+    \begin{python}
+sorted_weights = np.argsort(np.abs(weights), axis=1)[:, ::-1]
+columns = total_df.columns.tolist()
+index_to_column = dict(zip(range(len(columns)), columns))
+vectorize = np.vectorize(lambda x: index_to_column[x])
+influence_col = vectorize(sorted_weights)
+for i, w in enumerate(influence_col.tolist()):
+    print("{}: {}".format(i, dict(zip(w, np.round(weights[i][np.argsort(np.abs(weights[i]))[::-1]], 3)))))
+    \end{python}
+
+    Đoạn code dưới thể hiện giá trị trọng số tương ứng với từng đặc trưng và từng nhóm sinh viên, vị trí các trọng số được sắp xếp theo chiều giảm dần về giá trị tuyệt đối của các trọng số trong từng lớp.
+
     \begin{verbatim}
-0: ['sex', 'freq', 'strategy', 'educ', 'own', 'time_2', 'cost', 'master', 'adv', 'grade', 'home', 'busy', 'sport', 'coord', 'action', 'bored', 'cdrom', 'boring', 'age', 'lonely', 'where', 'math', 'graphic', 'sim', 'rules', 'work', 'like', 'challenge', 'friends', 'time_1', 'point', 'email', 'relax', 'frust']
-1: ['sex', 'relax', 'adv', 'action', 'where', 'sport', 'busy', 'educ', 'grade', 'freq', 'bored', 'sim', 'email', 'cost', 'challenge', 'graphic', 'cdrom', 'work', 'time_2', 'rules', 'strategy', 'boring', 'frust', 'math', 'friends', 'lonely', 'home', 'own', 'master', 'like', 'time_1', 'age', 'point', 'coord']
-2: ['freq', 'educ', 'busy', 'where', 'email', 'cost', 'relax', 'math', 'strategy', 'point', 'boring', 'bored', 'sex', 'time_2', 'work', 'action', 'own', 'grade', 'graphic', 'frust', 'cdrom', 'friends', 'rules', 'challenge', 'coord', 'home', 'time_1', 'adv', 'sport', 'like', 'lonely', 'sim', 'age', 'master']
-3: ['relax', 'strategy', 'own', 'time_2', 'action', 'point', 'cost', 'sport', 'frust', 'sim', 'adv', 'master', 'bored', 'challenge', 'home', 'graphic', 'rules', 'boring', 'coord', 'lonely', 'sex', 'friends', 'email', 'freq', 'math', 'cdrom', 'work', 'age', 'educ', 'grade', 'where', 'busy', 'like', 'time_1']
+0: {'sex': -1.576, 'freq': 0.375, 'strategy': 0.367, 'educ': 0.353, 'own': 0.32, 'time_2': 0.302,  
+'cost': -0.263, 'master': 0.261, 'adv': -0.251, 'grade': -0.228, 'home': 0.227, 
+'busy': 0.185,  'sport': -0.139, 'coord': 0.136, 'action': -0.097, 'bored': 0.091, 
+'cdrom': -0.09, 'boring': 0.089,  'age': 0.085, 'lonely': 0.083, 'where': 0.076, 
+'math': -0.072, 'graphic': 0.069, 'sim': -0.062, 
+'rules': 0.055, 'work': 0.051, 'like': 0.03, 'challenge': 0.02, 
+'friends': 0.019, 'time_1': -0.019, 'point': -0.013, 'email': -0.012, 
+'relax': -0.011, 'frust': 0.002}
+1: {'sex': 1.246, 'relax': 0.537, 'adv': 0.499, 'action': 0.47, 
+'where': 0.396, 'sport': 0.391, 'busy': 0.372, 'educ': 0.349, 
+'grade': 0.348, 'freq': 0.307,  'bored': 0.292, 
+'sim': 0.289, 'email': 0.271, 'cost': 0.24, 'challenge': 0.234, 
+'graphic': 0.23, 'cdrom': 0.22, 'work': -0.219, 'time_2': -0.199, 
+'rules': 0.188, 'strategy': 0.148, 'boring': -0.131, 
+'frust': 0.127, 'math': -0.095, 'friends': 0.078, 
+'lonely': 0.065, 'home': -0.064, 'own': 0.064, 'master': -0.06, 
+'like': -0.057, 'time_1': 0.056, 'age': -0.056, 'point': 0.03, 'coord': -0.009}
+2: {'freq': -0.772, 'educ': -0.683, 'busy': -0.563, 'where': -0.461, 
+'email': -0.377, 'cost': 0.256,  'relax': -0.244, 'math': 0.239, 
+'strategy': -0.238, 'point': 0.222, 'boring': 0.22, 'bored': -0.176, 
+'sex': 0.166, 'time_2': 0.159, 'work': 0.139, 'action': -0.13, 
+'own': -0.11, 'grade': -0.107,  'graphic': -0.101, 'frust': 0.089, 
+'cdrom': -0.08, 'friends': 0.057, 'rules': -0.054, 'challenge': -0.048, 
+'coord': 0.045, 'home': 0.042, 'time_1': -0.039, 'adv': -0.038, 
+'sport': -0.031, 'like': 0.03, 'lonely': 0.022, 
+'sim': -0.013, 'age': -0.01, 'master': 0.008}
+3: {'relax': -0.282, 'strategy': -0.278, 'own': -0.274, 'time_2': -0.262, 
+'action': -0.244, 'point': -0.238,  'cost': -0.232, 'sport': -0.221, 
+'frust': -0.218, 'sim': -0.213, 'adv': -0.21, 'master': -0.208, 'bored': -0.208, 
+'challenge': -0.207, 'home': -0.204, 'graphic': -0.198, 'rules': -0.189, 
+'boring': -0.178, 'coord': -0.172,  'lonely': -0.17, 'sex': 0.165, 
+'friends': -0.154, 'email': 0.118, 'freq': 0.09, 'math': -0.071, 'cdrom': -0.05, 
+'work': 0.028, 'age': -0.019, 'educ': -0.019, 'grade': -0.013, 
+'where': -0.011, 'busy': 0.007, 'like': -0.004, 'time_1': 0.002}
     \end{verbatim}
+
+    Đối với nhãn giả số 3, đa số là các đặc trưng bên phía dataframe thứ 2 có trọng số lớn nhất.
+    Lý do là vì nhãn số 3 tương ứng với các điểm dữ liệu 52,53,54,55 các đặc trưng bên phía dataframe thứ 2 đều cùng giá trị.
+    Nhóm số 0 và nhóm số 1 đều có đặc trưng giới tính ảnh hưởng nhiều đến kết quả phân loại.
+    Nhóm số 0 có giá trị trọng số được học tương ứng với đặc trưng giới tính là -1.576.
+    Ta thấy nhóm này có tỷ lệ nữ cao, do với trọng số trên là nam giới sẽ rất khó được gán vào nhóm này.
+    Nhóm số 0 có trọng số được huấn luyện tương ứng với tần suất chơi game là 0.375 cho thấy nhóm này là nhóm là các sinh viên nữ thích chơi game.
+
+
+    Nhóm số 1 có giá trị trọng số được học tương ứng với đặc trưng giới tính là 1.246.
+    Cho ta thấy nhóm này đa số là các sinh viên nam, ngoài ra trong nhóm này sinh viên đa số chơi vì mục đích thư giãn.
+    Một số yếu tố nữa, những sinh viên thích chơi game thể loại phiêu lưu và hành động cũng khả năng khá cao vào nhóm này.
+    Ngoài ra các yếu tố ảnh hưởng dễ phân loại vào nhóm này gồm nhiều sinh viên thích chơi game thể loại thể thao, dù bận vẫn chơi game.
+
+    Nhóm số 2 có trọng số tương ứng với các đặc trưng freq, educ, busy đều là âm cho thấy nhóm này là những sinh viên gần như rất ít khi chơi game,
+    họ cho rằng game ít có tính giáo dục và khi bận gần như chắc chắn không chơi game, nhóm này cho rằng chơi game là lãng phí chi phí và khi stress họ cũng ít chơi game để thư giãn (trọng số relax là -0.244)
+
+    Nhóm số 3 là nhóm các sinh viên thuộc nhóm ngoại lai do không điền bất kỳ thông tin gì ở dataframe thứ 2.
+
+    \textbf{Kết luận:} Ta sẽ phân nhóm sinh viên thành bốn nhóm:
+    \begin{itemize}
+        \item Nhóm số 0 gồm đa số là các sinh viên nữ có tần suất chơi game cao.
+        \item Nhóm số 1 gồm đa số là các sinh viên nam thích chơi game vì mục đích giải trí, nhóm sinh viên thích chơi các thể loại game phiêu lưu, hành động, thể thao và dù có bận vẫn có thể dành thời gian chơi game.
+        \item Nhóm số 2 gồm đa số là các sinh viên không thích chơi game vì họ cho rằng game không có tính giáo dục, tốn kém, khi bận gần như chắc chắn họ không chơi game.
+        \item Nhóm số 3 gồm 4 điểm ngoại lai do không điền bất kỳ thông tin gì ở dataframe thứ 2.
+    \end{itemize}
 \end{loigiai}
 
 \newpage
